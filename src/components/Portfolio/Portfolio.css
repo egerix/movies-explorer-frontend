@@ -1,0 +1,111 @@
+.portfolio {
+    background-color: #202020;
+}
+
+.portfolio__content {
+    padding: 101px 70px 105px 70px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.portfolio__title {
+    margin: 0 auto;
+    color: #8B8B8B;
+    font-size: 18px;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.portfolio__projects {
+    list-style: none;
+    margin: 50px 0 0 0;
+    padding: 0;
+}
+
+.portfolio__project {
+    width: 100%;
+    border-bottom: 1px solid #424242;
+    margin-bottom: 19px;
+}
+
+.portfolio__project:hover {
+    opacity: 70%;
+}
+
+.portfolio__link {
+    color: #ffffff;
+    font-size: 30px;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 50px;
+    letter-spacing: -1.2px;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 9px;
+}
+
+.portfolio__project:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.portfolio__arrow {
+    margin: 0;
+    font-size: 30px;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 60px;
+    letter-spacing: -1.2px;
+}
+
+@media screen and (max-width: 768px) {
+    .portfolio__content {
+        padding: 90px 50px 72px 50px;
+    }
+
+    .portfolio__link {
+        font-size: 28px;
+        line-height: 50px;
+    }
+
+    .portfolio__project {
+        border-color: #e6e6e6;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .portfolio__content {
+        padding: 70px 14px 50px 14px;
+    }
+
+    .portfolio__title {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .portfolio__link {
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: -0.72px;
+    }
+
+    .portfolio__arrow {
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: -0.72px;
+    }
+
+    .portfolio__projects {
+        margin-top: 40px;
+    }
+
+    .portfolio__link {
+        padding-bottom: 20px;
+    }
+}
