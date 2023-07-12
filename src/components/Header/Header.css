@@ -11,22 +11,22 @@
 }
 
 .header__content {
+    box-sizing: border-box;
     max-width: 1280px;
     margin: 0 auto;
     padding: 18px 70px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
     align-items: center;
     justify-content: space-between;
 }
 
 .header__center {
-    position: absolute;
     margin-left: auto;
     margin-right: auto;
     left: 0;
     right: 0;
     text-align: center;
-    width: 40%;
 }
 
 @media screen and (max-width: 768px) {

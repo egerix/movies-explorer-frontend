@@ -23,7 +23,7 @@ export default function AboutMe() {
                             момент
                             прохожу курс фронтенд-разботки на Яндекс Практикуме.
                         </p>
-                        <a className="about-me__link" href="https://github.com/egerix">
+                        <a className="about-me__link" href="https://github.com/egerix" target='_blank'>
                             Github
                         </a>
                     </div>

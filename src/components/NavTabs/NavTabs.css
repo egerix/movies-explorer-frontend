@@ -13,19 +13,27 @@
     gap: 20px;
 }
 
+.nav-tabs__item:hover {
+    opacity: 70%
+}
+
 .nav-tabs__link {
     color: #fff;
     text-align: right;
     font-size: 13px;
     font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 18px;
     cursor: pointer;
     text-decoration: none;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.nav-tabs__link_active {
+    font-weight: 500;
 }
 
 @media screen and (max-width: 768px) {

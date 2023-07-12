@@ -3,6 +3,7 @@
 }
 
 .about-project__content {
+    box-sizing: border-box;
     padding: 110px 70px 0 70px;
     max-width: 1280px;
     margin: 0 auto;
@@ -69,6 +70,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    margin: 0;
 }
 
 .about-project__stage-time_completed {

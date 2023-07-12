@@ -42,9 +42,13 @@
     text-decoration: none;
 }
 
+.not-found__link {
+    opacity: 70%;
+}
+
 @media screen and (max-width: 768px) {
     .not-found {
-        height: 1024px;
+        min-height: 1024px;
     }
 
     .not-found__title {
@@ -54,7 +58,7 @@
 
 @media screen and (max-width: 520px) {
     .not-found {
-        height: 780px;
+        min-height: 780px;
     }
 
     .not-found__title {

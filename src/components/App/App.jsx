@@ -9,6 +9,9 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import NotFound from '../NotFound/NotFound';
 import {useState} from "react";
 import NavPopup from "../NavPopup/NavPopup";
+import Header from "../Header/Header";
+import Promo from "../Promo/Promo";
+import Footer from "../Footer/Footer";
 
 
 function App() {
@@ -27,7 +30,14 @@ function App() {
                 <Route path='/profile' element={<Profile
                     onBurgerMenuClick={handleBurgerMenuClick}
                 />}/>
-                <Route path='/' element={<Main/>}/>
+                <Route path='/' element={
+                    <>
+                        <Header color='green'/>
+                        <Promo/>
+                        <Main/>
+                        <Footer/>
+                    </>
+                }/>
                 <Route path='/movies' element={<Movies
                     onBurgerMenuClick={handleBurgerMenuClick}
                 />}/>

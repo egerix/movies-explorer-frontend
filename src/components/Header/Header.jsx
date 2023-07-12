@@ -10,11 +10,11 @@ export default function Header({color, showTabs, onBurgerMenuClick}) {
                 <div className="header__logo">
                     <LogoLink/>
                 </div>
-                {showTabs && (
-                    <div className="header__center">
+                <div className="header__center">
+                    {showTabs && (
                         <NavTabs/>
-                    </div>
-                )}
+                    )}
+                </div>
                 <div className="header__right">
                     <Navigation onBurgerMenuClick={onBurgerMenuClick}/>
                 </div>

@@ -30,10 +30,10 @@ export default function Navigation({onBurgerMenuClick}) {
                         </Link>
                     </li>
                 )}
-                {onBurgerMenuClick &&
-                    <button type='button' className="navigation__burger" onClick={onBurgerMenuClick}></button>
-                }
             </ul>
+            {onBurgerMenuClick &&
+                <button type='button' className="navigation__burger" onClick={onBurgerMenuClick}></button>
+            }
         </nav>
     );
 }

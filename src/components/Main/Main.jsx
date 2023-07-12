@@ -10,15 +10,10 @@ import Portfolio from "../Portfolio/Portfolio";
 export default function Main() {
     return (
         <main className='main'>
-            <div className="main__green">
-                <Header color='green'/>
-                <Promo/>
-            </div>
             <AboutProject/>
             <Techs/>
             <AboutMe/>
             <Portfolio/>
-            <Footer/>
         </main>
     );
 }

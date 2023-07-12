@@ -23,6 +23,10 @@
     border-bottom: solid 1px #424242;
 }
 
+.search-form__line_active {
+    border-bottom-color: #4285F4;
+}
+
 .search-form__input {
     background-color: transparent;
     border: none;
@@ -34,6 +38,10 @@
     line-height: normal;
     outline: none;
     width: 100%;
+}
+
+.search-form__input:focus {
+    outline: none;
 }
 
 .search-form__button {
@@ -48,11 +56,10 @@
     background-position: right;
     box-sizing: border-box;
     cursor: pointer;
-    transition: opacity 1s linear;
 }
 
 .search-form__button:hover {
-    opacity: 70%;
+    opacity: 80%;
 }
 
 .search-form__input-error {

@@ -3,6 +3,7 @@
 }
 
 .portfolio__content {
+    box-sizing: border-box;
     padding: 101px 70px 105px 70px;
     max-width: 1280px;
     margin: 0 auto;
@@ -31,7 +32,7 @@
 }
 
 .portfolio__project:hover {
-    opacity: 70%;
+    opacity: 80%;
 }
 
 .portfolio__link {

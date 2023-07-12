@@ -1,20 +1,22 @@
 import './NavTabs.css';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 export default function NavTabs() {
+
+    const linkClass = ({isActive}) => `nav-tabs__link ${isActive ? 'nav-tabs__link_active' : ''} `
 
     return (
         <nav className='nav-tabs'>
             <ul className='nav-tabs__items'>
                 <li className="nav-tabs__item">
-                    <Link to='/movies' className='nav-tabs__link'>
+                    <NavLink to='/movies' className={linkClass}>
                         Фильмы
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className="nav-tabs__item">
-                    <Link to='/saved-movies' className='nav-tabs__link'>
+                    <NavLink to='/saved-movies' className={linkClass}>
                         Сохраненные фильмы
-                    </Link>
+                    </NavLink>
                 </li>
             </ul>
         </nav>

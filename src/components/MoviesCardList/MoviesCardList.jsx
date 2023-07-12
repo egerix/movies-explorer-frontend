@@ -10,7 +10,11 @@ function MoviesCardList({count, savedMode}) {
                     <MoviesCard key={i} savedMode={savedMode}/>
                 )}
             </ul>
-            {count >= 5 && <button className='movies-section__more-button'>Ещё</button>}
+            <div className="movies-section__more">
+                {count >= 5 &&
+                    <button className='movies-section__more-button' type="button">Ещё</button>
+                }
+            </div>
         </section>
     );
 }

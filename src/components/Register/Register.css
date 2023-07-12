@@ -56,7 +56,8 @@
     padding: 5px 0 10px 0;
 }
 
-.register__input_active {
+.register__input:focus {
+    outline: none;
     border-bottom-color: #4285F4;
 }
 
@@ -74,12 +75,11 @@
     cursor: pointer;
     border: none;
     border-radius: 3px;
-    transition: opacity 1s linear;
     width: 100%;
 }
 
 .register__button:hover {
-    opacity: 70%;
+    opacity: 80%;
 }
 
 .register__registered {
@@ -104,11 +104,10 @@
     margin: 0 0 0 6px;
     text-decoration: none;
     color: #4285F4;
-    transition: opacity 1s linear;
 }
 
 .register__register-link:hover {
-    opacity: 70%;
+    opacity: 80%;
 }
 
 .register__input-error {
@@ -128,7 +127,7 @@
 
 @media screen and (max-width: 768px) {
     .register {
-        height: 1024px;
+        min-height: 1024px;
     }
 
     .register__header {

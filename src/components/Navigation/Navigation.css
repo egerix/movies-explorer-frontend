@@ -68,13 +68,17 @@
     width: 42px;
     height: 38px;
     border: none;
-    transition: 0.3s;
     cursor: pointer;
     display: none;
+    background-size: cover;
 }
 
 .navigation__burger:hover {
-    opacity: 70%;
+    opacity: 80%;
+}
+
+.navigation__link:hover {
+    opacity: 80%;
 }
 
 @media screen and (max-width: 768px) {
@@ -99,5 +103,10 @@
 
     .navigation__items {
         gap: 14px;
+    }
+
+    .navigation__burger {
+        width: 36px;
+        height: 39px;
     }
 }

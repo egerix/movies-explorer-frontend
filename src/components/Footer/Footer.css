@@ -3,6 +3,7 @@
 }
 
 .footer__content {
+    box-sizing: border-box;
     padding: 79px 70px 20px 70px;
     max-width: 1280px;
     margin: 0 auto;
@@ -49,7 +50,6 @@
     cursor: pointer;
     text-decoration: none;
     color: #ffffff;
-    transition: opacity 1s linear;
 }
 
 .footer__link:hover {

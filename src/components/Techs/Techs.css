@@ -3,6 +3,7 @@
 }
 
 .techs__content {
+    box-sizing: border-box;
     padding: 100px 70px 0 70px;
     max-width: 1280px;
     margin: 0 auto;

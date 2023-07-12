@@ -28,11 +28,11 @@ export default function AboutProject() {
                 </div>
                 <div className='about-project__timeline'>
                     <div className='about-project__stages'>
-                        <div className='about-project__stage-time about-project__stage-time_completed'>1 неделя</div>
+                        <p className='about-project__stage-time about-project__stage-time_completed'>1 неделя</p>
                         <p className='about-project__stage-desc'>Back-end</p>
                     </div>
                     <div className='about-project__plan-info '>
-                        <div className='about-project__stage-time'>4 недели</div>
+                        <p className='about-project__stage-time'>4 недели</p>
                         <p className='about-project__stage-desc'>Front-end</p>
                     </div>
                 </div>
