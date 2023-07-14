@@ -1,0 +1,42 @@
+.header {
+    width: 100%;
+}
+
+.header_green {
+    background-color: #073042;
+}
+
+.header_black {
+    background-color: #202020;
+}
+
+.header__content {
+    box-sizing: border-box;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 70px;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__center {
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .header__content {
+        padding: 18px 30px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .header__content {
+        padding: 18px 14px;
+    }
+}
