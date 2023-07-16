@@ -1,39 +1,91 @@
 import './Profile.css';
-import {Link} from 'react-router-dom';
 import Header from '../Header/Header';
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {useFormWithValidation} from "../../utils/validation";
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
-function Profile({onBurgerMenuClick}) {
-
+function Profile({onEditSubmit, onBurgerMenuClick, onSignOutClick, apiError}) {
+    const currentUser = useContext(CurrentUserContext);
     const [isEditing, setIsEditing] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
 
-    const handleEditClick = () => {
+    const {
+        errors,
+        values,
+        isValid,
+        handleChange,
+        resetForm,
+    } = useFormWithValidation();
 
+    function handleEditClick() {
+        values.email = currentUser.email;
+        values.name = currentUser.name;
         setIsEditing(true)
     }
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        onEditSubmit({
+            email: values.email,
+            name: values.name,
+        });
+    }
+
+    useEffect(() => {
+        resetForm();
+    }, [resetForm]);
+
+    useEffect(() => {
+        let isDisabled = !isValid || (values.email === currentUser.email && values.name === currentUser.name)
+        setIsDisabled(isDisabled);
+    }, [currentUser, isValid, values]);
+
     return (
         <div className='profile'>
-            <Header showTabs={true} onBurgerMenuClick={onBurgerMenuClick}/>
-            <form className='profile__form'>
-                <h1 className='profile__title'>Привет, Виталий!</h1>
-                <fieldset className='profile__fieldset'>
+            <Header onBurgerMenuClick={onBurgerMenuClick}/>
+            <form className='profile__form' onSubmit={handleSubmit} noValidate>
+                <h1 className='profile__title'>{`Привет, ${currentUser.name}!`}</h1>
+                <div className='profile__fieldset'>
+                    <p className='profile__input-error'>{errors.name || ''}</p>
                     <div className='profile__field profile__field_first'>
                         <label className='profile__name'>Имя</label>
-                        <input className='profile__input' disabled={!isEditing} type='text' placeholder='Виталий'
-                               minLength="3" maxLength="20"
+                        <input className='profile__input'
+                               disabled={!isEditing}
+                               name='name'
+                               id='name'
+                               type='text'
+                               placeholder={currentUser.name}
+                               minLength="3"
+                               maxLength="20"
+                               pattern="[a-zA-Zа-яА-ЯёЁ\-\s]*"
+                               value={values.name || ''}
+                               onChange={handleChange}
                                required/>
                     </div>
                     <div className='profile__field'>
                         <label className='profile__name'>E-mail</label>
-                        <input className='profile__input' disabled={!isEditing} type='email'
-                               placeholder='pochta@yandex.ru' required/>
+                        <input className='profile__input'
+                               disabled={!isEditing}
+                               name='email'
+                               id='email'
+                               type='email'
+                               placeholder={currentUser.email}
+                               value={values.email || ''}
+                               onChange={handleChange}
+                               required/>
                     </div>
-                </fieldset>
+                    <p className='profile__input-error'>{errors.email || ''}</p>
+
+                </div>
                 {isEditing &&
-                    <button className='profile__submit-btn' type='submit' onClick={handleEditClick}>
-                        Сохранить
-                    </button>
+                    <>
+                        <p className='profile__api-error'>{apiError || ''}</p>
+                        <button className={`profile__submit-btn ${isDisabled ? 'profile__submit-btn_disabled' : ''}`}
+                                disabled={isDisabled}
+                                type='submit'>
+                            Сохранить
+                        </button>
+                    </>
                 }
             </form>
             {!isEditing &&
@@ -41,9 +93,9 @@ function Profile({onBurgerMenuClick}) {
                     <button className='profile__edit-btn' type="button" onClick={handleEditClick}>
                         Редактировать
                     </button>
-                    <Link to='/' className='profile__link'>
+                    <button className='profile__link' type="button" onClick={onSignOutClick}>
                         Выйти из аккаунта
-                    </Link>
+                    </button>
                 </>
             }
         </div>

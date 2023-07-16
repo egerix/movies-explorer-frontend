@@ -71,15 +71,25 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    margin-top: 128px;
     cursor: pointer;
     border: none;
     border-radius: 3px;
     width: 100%;
+    margin-top: 20px;
+}
+
+.register__button_disabled {
+    color: #c2c2c2;
+    background: #F8F8F8;
+    cursor: auto;
 }
 
 .register__button:hover {
     opacity: 80%;
+}
+
+.register__button_disabled:hover {
+    opacity: 100%;
 }
 
 .register__registered {
@@ -119,10 +129,25 @@
     line-height: normal;
     color: #ee3465;
     height: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: auto;
 }
 
 .register__input_invalid {
     color: #ee3465;
+}
+
+.register__api-error {
+    color: #FF004C;
+    text-align: center;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 95px 0 0 0;
+    min-height: 13px;
 }
 
 @media screen and (max-width: 768px) {
@@ -166,8 +191,8 @@
         margin-top: 80px;
     }
 
-    .register__button {
-        margin-top: 215px;
+    .register__api-error {
+        margin-top: 182px;
     }
 
     .register__registered {

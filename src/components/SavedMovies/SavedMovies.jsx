@@ -4,12 +4,32 @@ import SearchForm from '../SearchForm/SearchForm';
 import Footer from '../Footer/Footer';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies({onBurgerMenuClick}) {
+function SavedMovies({
+                         onBurgerMenuClick,
+                         movies,
+                         savedMovies,
+                         searchQuery,
+                         isShortFilms,
+                         onSearch,
+                         onCheckbox,
+                         onDelete,
+                         onSave,
+                     }) {
     return (
         <section className='saved-movies'>
-            <Header color='gray' showTabs={true} onBurgerMenuClick={onBurgerMenuClick}/>
-            <SearchForm/>
-            <MoviesCardList count={3} savedMode={true}/>
+            <Header color='gray' onBurgerMenuClick={onBurgerMenuClick}/>
+            <SearchForm
+                searchQuery={searchQuery}
+                isShortFilms={isShortFilms}
+                onSearch={onSearch}
+                onCheckbox={onCheckbox}/>
+            <MoviesCardList
+                isSavedMode={true}
+                movies={movies}
+                savedMovies={savedMovies}
+                onSave={onSave}
+                onDelete={onDelete}
+            />
             <Footer/>
         </section>
     );
