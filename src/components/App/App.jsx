@@ -95,6 +95,7 @@ function App() {
             .login({email, password})
             .then((data) => {
                 localStorage.setItem(authConfig.tokenStorageName, data.token);
+                mainApi.setToken(data.token);
                 setIsLoggedIn(true);
                 setCurrentUser({
                     email: data.email,
@@ -192,20 +193,22 @@ function App() {
     }
 
     useEffect(() => {
-        setIsShowPreloader(true)
-        Promise.all(
-            [fetchAllMovies(), fetchSavedMovies()]
-        ).finally(() => setIsShowPreloader(false))
-    }, [])
+        if (isLoggedIn) {
+            setIsShowPreloader(true)
+            Promise.all(
+                [fetchAllMovies(), fetchSavedMovies()]
+            ).finally(() => setIsShowPreloader(false))
+        }
+    }, [isLoggedIn])
 
     useEffect(() => {
         const filter = (arr) => arr.filter((movie) => {
-                let keep = movie.nameRU.toLowerCase().includes(searchQuery);
-                if (isShortFilms) {
-                    keep = keep && movie.duration <= 40
-                }
-                return keep
-            })
+            let keep = movie.nameRU.toLowerCase().includes(searchQuery);
+            if (isShortFilms) {
+                keep = keep && movie.duration <= 40
+            }
+            return keep
+        })
 
         setFilteredMovies(filter(allMovies))
     }, [searchQuery, isShortFilms])
