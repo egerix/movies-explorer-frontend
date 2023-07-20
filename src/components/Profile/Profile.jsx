@@ -4,8 +4,9 @@ import {useContext, useEffect, useState} from "react";
 import {useFormWithValidation} from "../../utils/validation";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
-function Profile({onEditSubmit, onBurgerMenuClick, onSignOutClick, apiError}) {
+function Profile({onEditSubmit, onBurgerMenuClick, onSignOutClick, responseInfo}) {
     const currentUser = useContext(CurrentUserContext);
+
     const [isEditing, setIsEditing] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
 
@@ -69,6 +70,7 @@ function Profile({onEditSubmit, onBurgerMenuClick, onSignOutClick, apiError}) {
                                name='email'
                                id='email'
                                type='email'
+                               pattern="\S+@\S+\.\S+"
                                placeholder={currentUser.email}
                                value={values.email || ''}
                                onChange={handleChange}
@@ -79,7 +81,9 @@ function Profile({onEditSubmit, onBurgerMenuClick, onSignOutClick, apiError}) {
                 </div>
                 {isEditing &&
                     <>
-                        <p className='profile__api-error'>{apiError || ''}</p>
+                        <p className={`profile__api-info ${responseInfo.isError 
+                            ? 'profile__api-info_err' 
+                            : 'profile__api-info_msg' }`}>{responseInfo.message || ''}</p>
                         <button className={`profile__submit-btn ${isDisabled ? 'profile__submit-btn_disabled' : ''}`}
                                 disabled={isDisabled}
                                 type='submit'>

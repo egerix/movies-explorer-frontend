@@ -28,25 +28,26 @@ function MoviesCardList({
 
     return (
         <section className='movies-section'>
+            { movies.length < 1 && <p className='movies-section__empty'>Ничего не найдено</p>}
             <ul className="movies-section__cards">
                 {movies
                     .filter((movie) => !isSavedMode || moviesHasMovie(savedMovies, movie.movieId))
                     .map((movie, movieIndex) => {
-                    return (
-                        movieIndex < loadSize &&
-                        <MoviesCard
-                            isSavedMode={isSavedMode}
-                            isSaved={isSavedMode || moviesHasMovie(savedMovies, movie.movieId)}
-                            movie={movie}
-                            key={movie.movieId}
-                            onDelete={onDelete}
-                            onSave={onSave}
-                        />
-                    );
-                })}
+                        return (
+                            movieIndex < loadSize &&
+                            <MoviesCard
+                                isSavedMode={isSavedMode}
+                                isSaved={isSavedMode || moviesHasMovie(savedMovies, movie.movieId)}
+                                movie={movie}
+                                key={movie.movieId}
+                                onDelete={onDelete}
+                                onSave={onSave}
+                            />
+                        );
+                    })}
             </ul>
             <div className="movies-section__more">
-                {(isSavedMode ? savedMovies : movies).length >= loadSize &&
+                {(isSavedMode ? savedMovies : movies).length > loadSize &&
                     <button className='movies-section__more-button' type="button" onClick={handleMoreClick}>Ещё</button>
                 }
             </div>

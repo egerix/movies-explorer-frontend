@@ -4,7 +4,7 @@ import Logo from "../Logo/Logo";
 import {useFormWithValidation} from "../../utils/validation";
 import {useEffect} from "react";
 
-function Register({onRegisterSubmit, apiError}) {
+function Register({onRegisterSubmit, responseInfo}) {
 
     const {
         errors,
@@ -56,6 +56,7 @@ function Register({onRegisterSubmit, apiError}) {
                            id='email'
                            type='email'
                            placeholder='pochta@yandex.ru'
+                           pattern="\S+@\S+\.\S+"
                            value={values.email || ''}
                            onChange={handleChange}
                            required/>
@@ -75,7 +76,7 @@ function Register({onRegisterSubmit, apiError}) {
                            required/>
                     <span className='register__input-error'>{errors.password || ''}</span>
                 </div>
-                <p className='register__api-error'>{apiError || ''}</p>
+                <p className='register__api-error'>{responseInfo.isError ? responseInfo.message : ''}</p>
                 <button className={`register__button ${!isValid && errors ? 'register__button_disabled' : ''}`}
                         disabled={!isValid}
                         type='submit'>

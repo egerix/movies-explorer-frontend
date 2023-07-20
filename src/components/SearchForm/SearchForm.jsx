@@ -39,7 +39,7 @@ function SearchForm({
                                required/>
                         <button className='search-form__button' type="submit"/>
                     </div>
-                    <div className={`search-form__line ${isFocused && "search-form__line_active" }`} ></div>
+                    <div className={`search-form__line ${isFocused && "search-form__line_active"}`}></div>
                     <FilterCheckbox
                         onCheckbox={onCheckbox}
                         isChecked={isShortFilms}

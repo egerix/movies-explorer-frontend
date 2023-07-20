@@ -26,6 +26,11 @@ class MainApi {
         return this;
     }
 
+    removeToken() {
+        const { Authorization, ...headers } = this._headers
+        this._headers = headers;
+    }
+
     login({email, password}) {
         return fetch(`${this._url}/signin`, {
             method: "POST",

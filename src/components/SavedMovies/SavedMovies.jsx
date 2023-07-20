@@ -3,24 +3,29 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import Footer from '../Footer/Footer';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import {useEffect} from "react";
 
 function SavedMovies({
                          onBurgerMenuClick,
                          movies,
                          savedMovies,
-                         searchQuery,
-                         isShortFilms,
                          onSearch,
                          onCheckbox,
                          onDelete,
                          onSave,
                      }) {
+
+
+    useEffect(() => {
+        onSearch('')
+    }, [])
+
     return (
         <section className='saved-movies'>
             <Header color='gray' onBurgerMenuClick={onBurgerMenuClick}/>
             <SearchForm
-                searchQuery={searchQuery}
-                isShortFilms={isShortFilms}
+                searchQuery={''}
+                isShortFilms={false}
                 onSearch={onSearch}
                 onCheckbox={onCheckbox}/>
             <MoviesCardList

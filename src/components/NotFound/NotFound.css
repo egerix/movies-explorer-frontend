@@ -30,7 +30,7 @@
     margin-bottom: 0;
 }
 
-.not-found__link {
+.not-found__back-btn {
     margin-top: 184px;
     color: #4285f4;
     text-align: center;
@@ -40,9 +40,13 @@
     font-weight: 400;
     line-height: normal;
     text-decoration: none;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.not-found__link {
+.not-found__back-btn:hover {
     opacity: 70%;
 }
 
@@ -71,7 +75,7 @@
         font-size: 12px;
     }
 
-    .not-found__link {
+    .not-found__back-btn {
         margin-top: 284px;
         font-size: 12px;
     }

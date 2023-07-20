@@ -19,12 +19,12 @@ export function moviesHasMovie(movies, movieId) {
 }
 
 export function getLoadMoreParam(width) {
-    if (width >= 1280) {
+    if (width >= 1151) {
         return {
             init: 12,
             more: 3,
         }
-    } else if (width >= 768) {
+    } else if (width > 768) {
         return {
             init: 8,
             more: 2,

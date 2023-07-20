@@ -5,6 +5,20 @@
     flex-grow: 1;
 }
 
+.movies-section__empty {
+    background-color: transparent;
+    border: none;
+    color: #8B8B8B;
+    font-size: 28px;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    outline: none;
+    width: 100%;
+    text-align: center;
+}
+
 .movies-section__cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, 360px);
@@ -54,7 +68,7 @@
 
     .movies-section__cards {
         gap: 35px 24px;
-        grid-template-columns: repeat(auto-fill, 342px);
+        grid-template-columns: 342px;
         padding-bottom: 30px;
     }
 

@@ -4,7 +4,7 @@ import Logo from "../Logo/Logo";
 import {useFormWithValidation} from "../../utils/validation";
 import {useEffect} from "react";
 
-function Login({onLoginSubmit, apiError}) {
+function Login({onLoginSubmit, responseInfo}) {
 
     const {
         errors,
@@ -40,6 +40,7 @@ function Login({onLoginSubmit, apiError}) {
                            id='email'
                            type='email'
                            placeholder='pochta@yandex.ru'
+                           pattern="\S+@\S+\.\S+"
                            value={values.email || ''}
                            onChange={handleChange}
                            required/>
@@ -59,7 +60,7 @@ function Login({onLoginSubmit, apiError}) {
                            required/>
                     <span className='login__input-error'>{errors.password || ''}</span>
                 </div>
-                <p className='login__api-error'>{apiError || ''}</p>
+                <p className='login__api-error'>{responseInfo.isError ? responseInfo.message : ''}</p>
                 <button className={`login__button ${!isValid && errors ? 'login__button_disabled' : ''}`}
                         disabled={!isValid}
                         type='submit'>

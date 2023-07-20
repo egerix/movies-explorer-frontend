@@ -1,5 +1,5 @@
 import './App.css';
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Profile from '../Profile/Profile';
@@ -16,7 +16,7 @@ import {CurrentUserContext} from '../../contexts/CurrentUserContext'
 import {AuthUserContext} from '../../contexts/AuthUserContext'
 import Preloader from "../Preloader/Preloader";
 import {mainApi} from "../../utils/MainApi";
-import {authConfig} from "../../utils/config";
+import {authConfig, localStorageNames} from "../../utils/config";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import {moviesApi} from "../../utils/MoviesApi";
 import {convertMovieData} from "../../utils/movies";
@@ -28,17 +28,16 @@ function App() {
     const [isNavPopupOpened, setIsNavPopupOpened] = useState(false);
     const [isShowPreloader, setIsShowPreloader] = useState(false);
     const [currentUser, setCurrentUser] = useState({});
-    const [apiError, setApiError] = useState('');
+    const [responseInfo, setResponseInfo] = useState({isError: false, message: ''});
 
-    const [isShortFilms, setIsShortFilms] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const [allMovies, setAllMovies] = useState([]);
-    const [savedMovies, setSavedMovies] = useState([]);
-    const [filteredMovies, setFilteredMovies] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(() => localStorage.getItem(localStorageNames.searchQuery) || '');
+    const [isShortFilms, setIsShortFilms] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.isShortFilms) || false));
+    const [allMovies, setAllMovies] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.allMovies) || '[]'));
+    const [savedMovies, setSavedMovies] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.savedMovies) || '[]'));
+    const [filteredMovies, setFilteredMovies] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.filteredMovies) || '[]'));
 
     function getInitLoginState() {
-        const token = localStorage.getItem(authConfig.tokenStorageName);
+        const token = localStorage.getItem(localStorageNames.token);
         if (token) {
             return mainApi
                 .setToken(token)
@@ -52,7 +51,8 @@ function App() {
                     return true;
                 })
                 .catch(() => {
-                    localStorage.removeItem(authConfig.tokenStorageName);
+                    mainApi.removeToken();
+                    localStorage.removeItem(localStorageNames.token);
                     return false
                 })
         } else {
@@ -60,8 +60,16 @@ function App() {
         }
     }
 
-    function resetApiError() {
-        setApiError('')
+    function resetApiInfo() {
+        setResponseInfo({isError: false, message: ''})
+    }
+
+    function setApiError(err) {
+        setResponseInfo({isError: true, message: err})
+    }
+
+    function setApiMessage(msg){
+        setResponseInfo({isError: false, message: msg})
     }
 
     function handleBurgerMenuClick() {
@@ -73,7 +81,7 @@ function App() {
     }
 
     function handleRegister({email, password, name}) {
-        resetApiError();
+        resetApiInfo();
         setIsShowPreloader(true);
         mainApi
             .register({email, password, name})
@@ -89,20 +97,17 @@ function App() {
     }
 
     function handleLogin({email, password}) {
-        resetApiError();
+        resetApiInfo();
         setIsShowPreloader(true);
         mainApi
             .login({email, password})
             .then((data) => {
-                localStorage.setItem(authConfig.tokenStorageName, data.token);
+                localStorage.setItem(localStorageNames.token, data.token);
                 mainApi.setToken(data.token);
                 setIsLoggedIn(true);
-                setCurrentUser({
-                    email: data.email,
-                    name: data.name,
-                });
-                navigate(authConfig.endpoints.successLogin);
+                navigate(authConfig.endpoints.successLogin, {replace: true});
             })
+            .then(() => getInitLoginState())
             .catch((error) => {
                 setApiError(error.message)
             })
@@ -112,19 +117,25 @@ function App() {
     }
 
     function handleLogout() {
-        localStorage.removeItem(authConfig.tokenStorageName);
         setIsLoggedIn(false);
         setCurrentUser({});
+        setSavedMovies([]);
+        setAllMovies([]);
+        setFilteredMovies([]);
+        setIsShortFilms(false);
+        setSearchQuery('');
+        localStorage.clear();
         navigate('/', {replace: true});
     }
 
     function handleEditProfile({email, name}) {
         setIsShowPreloader(true);
-        resetApiError();
+        resetApiInfo();
         mainApi
             .editProfile({email, name})
             .then(() => {
                 setCurrentUser({email, name});
+                setApiMessage('Данные успешно изменены')
             })
             .catch((error) => {
                 setApiError(error.message)
@@ -172,12 +183,8 @@ function App() {
     function fetchSavedMovies() {
         return mainApi
             .getSavedMovies()
-            .then((movies) => {
-                setSavedMovies(movies)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+            .then((movies) => setSavedMovies(movies))
+            .catch((err) => console.log(err))
     }
 
     function fetchAllMovies() {
@@ -193,41 +200,69 @@ function App() {
     }
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn && allMovies.length < 1) {
             setIsShowPreloader(true)
             Promise.all(
                 [fetchAllMovies(), fetchSavedMovies()]
-            ).finally(() => setIsShowPreloader(false))
+            )
+                .finally(() => setIsShowPreloader(false))
         }
     }, [isLoggedIn])
 
     useEffect(() => {
         const filter = (arr) => arr.filter((movie) => {
-            let keep = movie.nameRU.toLowerCase().includes(searchQuery);
+            let keep = movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
             if (isShortFilms) {
                 keep = keep && movie.duration <= 40
             }
             return keep
         })
-
         setFilteredMovies(filter(allMovies))
-    }, [searchQuery, isShortFilms])
+    }, [searchQuery, isShortFilms, allMovies])
+
+    useEffect(() => {
+            if (isShortFilms !== undefined) {
+                localStorage.setItem(localStorageNames.isShortFilms, isShortFilms.toString())
+            }
+            if (searchQuery !== undefined) {
+                localStorage.setItem(localStorageNames.searchQuery, searchQuery.toString())
+            }
+            if (allMovies !== undefined) {
+                localStorage.setItem(localStorageNames.allMovies, JSON.stringify(allMovies))
+            }
+            if (savedMovies !== undefined) {
+                localStorage.setItem(localStorageNames.savedMovies, JSON.stringify(savedMovies))
+            }
+            if (filteredMovies !== undefined) {
+                localStorage.setItem(localStorageNames.filteredMovies, JSON.stringify(filteredMovies))
+            }
+        },
+        [isShortFilms, searchQuery, allMovies, savedMovies, filteredMovies])
 
     return (
         <div className='app'>
             <AuthUserContext.Provider value={{isLoggedIn}}>
                 <CurrentUserContext.Provider value={currentUser}>
                     <Routes>
-                        <Route path='/signup'
-                               element={<Register apiError={apiError} onRegisterSubmit={handleRegister}/>}/>
-                        <Route path='/signin' element={<Login apiError={apiError} onLoginSubmit={handleLogin}/>}/>
+                        {!isLoggedIn ?
+                            (<>
+                                <Route path='/signup'
+                                       element={<Register responseInfo={responseInfo} onRegisterSubmit={handleRegister}/>}/>
+                                <Route path='/signin'
+                                       element={<Login responseInfo={responseInfo} onLoginSubmit={handleLogin}/>}/>
+                            </>) :
+                            (<>
+                                <Route path='/signin' element={<Navigate to='/'/>}/>
+                                <Route path='/signup' element={<Navigate to='/'/>}/>
+                            </>)
+                        }
                         <Route path='/profile' element={
                             <ProtectedRoute
                                 element={Profile}
                                 onBurgerMenuClick={handleBurgerMenuClick}
                                 onEditSubmit={handleEditProfile}
                                 onSignOutClick={handleLogout}
-                                apiError={apiError}
+                                responseInfo={responseInfo}
                             />
                         }/>
                         <Route path='/' element={
@@ -255,7 +290,6 @@ function App() {
                         <Route path='/saved-movies' element={
                             <ProtectedRoute
                                 element={SavedMovies}
-                                searchQuery={searchQuery}
                                 isShortFilms={isShortFilms}
                                 onBurgerMenuClick={handleBurgerMenuClick}
                                 movies={filteredMovies}

@@ -7,7 +7,6 @@ const mainApiCConfig = {
 }
 
 const authConfig = {
-    tokenStorageName: 'jwt',
     endpoints: {
         login: '/signin',
         register: '/signup',
@@ -15,8 +14,18 @@ const authConfig = {
     }
 }
 
+const localStorageNames = {
+    token: 'jwt',
+    isShortFilms: 'isShortFilms',
+    searchQuery: 'searchQuery',
+    allMovies: 'allMovies',
+    savedMovies: 'savedMovies',
+    filteredMovies: 'filteredMovies',
+}
+
 export {
     moviesApiCConfig,
     mainApiCConfig,
     authConfig,
+    localStorageNames,
 }

@@ -66,7 +66,7 @@
     font-size: 11px;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
+    line-height: 11px;
     color: #ee3465;
     height: 12px;
     white-space: nowrap;
@@ -75,8 +75,7 @@
     margin: 6px 0 6px 0;
 }
 
-.profile__api-error {
-    color: #FF004C;
+.profile__api-info {
     text-align: center;
     font-family: 'Inter', 'Arial', sans-serif;
     font-size: 11px;
@@ -85,6 +84,14 @@
     line-height: normal;
     margin: 183px 0 0 0;
     min-height: 13px;
+}
+
+.profile__api-info_err {
+    color: #FF004C;
+}
+
+.profile__api-info_msg {
+    color: #4285f4;
 }
 
 .profile__input:focus {
@@ -175,7 +182,7 @@
         margin-top: 73px;
     }
 
-    .profile__api-error {
+    .profile__api-info {
         margin-top: 176px;
     }
 
@@ -203,7 +210,7 @@
         font-size: 12px;
     }
 
-    .profile__api-error {
+    .profile__api-info {
         margin-top: 345px;
     }
 
