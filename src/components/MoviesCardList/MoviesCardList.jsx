@@ -28,7 +28,8 @@ function MoviesCardList({
 
     return (
         <section className='movies-section'>
-            { movies.length < 1 && <p className='movies-section__empty'>Ничего не найдено</p>}
+            { movies.filter((movie) => !isSavedMode || moviesHasMovie(savedMovies, movie.movieId)) < 1
+                && <p className='movies-section__empty'>Ничего не найдено</p>}
             <ul className="movies-section__cards">
                 {movies
                     .filter((movie) => !isSavedMode || moviesHasMovie(savedMovies, movie.movieId))
