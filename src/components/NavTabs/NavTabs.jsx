@@ -1,5 +1,5 @@
 import './NavTabs.css';
-import {Link, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 export default function NavTabs() {
 

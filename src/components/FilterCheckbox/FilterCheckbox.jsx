@@ -1,13 +1,16 @@
 import "./FilterCheckbox.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-const FilterCheckbox = () => {
+function FilterCheckbox({onCheckbox, isChecked}) {
 
-    const [isCheckBoxActive, setCheckBoxActive] = useState(false);
+    const [isCheckBoxActive, setCheckBoxActive] = useState(isChecked);
 
     const handleOnClick = () => {
         setCheckBoxActive(!isCheckBoxActive);
     };
+
+    useEffect(() => onCheckbox(isCheckBoxActive),
+        [isCheckBoxActive])
 
     return (
         <div className="filter-checkbox">
@@ -19,6 +22,6 @@ const FilterCheckbox = () => {
             <p className="filter-checkbox__title">Короткометражки</p>
         </div>
     );
-};
+}
 
 export default FilterCheckbox;

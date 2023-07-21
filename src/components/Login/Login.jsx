@@ -1,29 +1,72 @@
 import './Login.css';
 import {Link} from 'react-router-dom';
 import Logo from "../Logo/Logo";
+import {useFormWithValidation} from "../../utils/validation";
+import {useEffect} from "react";
 
-function Login() {
+function Login({onLoginSubmit, responseInfo}) {
+
+    const {
+        errors,
+        values,
+        isValid,
+        handleChange,
+        resetForm,
+    } = useFormWithValidation();
+
+    useEffect(() => {
+        resetForm();
+    }, [resetForm]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        onLoginSubmit({
+            email: values.email,
+            password: values.password,
+        });
+    }
+
     return (
         <div className='login'>
             <div className='login__header'>
                 <Logo/>
             </div>
             <h1 className='login__title'>Рады видеть!</h1>
-            <form className='login__form' noValidate>
+            <form className='login__form' onSubmit={handleSubmit} noValidate>
                 <div className='login__field'>
                     <label className='login__field-name'>E-mail</label>
-                    <input className='login__input' name='email' id='email' type='email' placeholder='pochta@yandex.ru'
-                           required/>
-                    <span className='login__input-error'></span>
+                    <input
+                        className='login__input'
+                        name='email'
+                        id='email'
+                        type='email'
+                        placeholder='pochta@yandex.ru'
+                        pattern="\S+@\S+\.\S+"
+                        value={values.email || ''}
+                        onChange={handleChange}
+                        required/>
+                    <span className='login__input-error'>{errors.email || ''}</span>
                 </div>
                 <div className='login__field'>
                     <label className='login__field-name'>Пароль</label>
-                    <input className='login__input login__input_invalid' name='password' id='password' type='password'
-                           minLength="3" maxLength="20"
-                           placeholder='****' required/>
-                    <span className='login__input-error'></span>
+                    <input
+                        className='login__input'
+                        name='password'
+                        id='password'
+                        type='password'
+                        minLength="3"
+                        maxLength="20"
+                        placeholder='****'
+                        value={values.password || ''}
+                        onChange={handleChange}
+                        required/>
+                    <span className='login__input-error'>{errors.password || ''}</span>
                 </div>
-                <button className='login__button' type='submit'>
+                <p className='login__api-error'>{responseInfo.isError ? responseInfo.message : ''}</p>
+                <button
+                    className={`login__button ${!isValid && errors ? 'login__button_disabled' : ''}`}
+                    disabled={!isValid}
+                    type='submit'>
                     Войти
                 </button>
             </form>

@@ -28,7 +28,7 @@
 .profile__fieldset {
     border: none;
     width: 410px;
-    margin: 123px auto 0 auto;
+    margin: 99px auto 0 auto;
     padding: 0;
 }
 
@@ -61,6 +61,39 @@
     text-align: right;
 }
 
+.profile__input-error {
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 11px;
+    color: #ee3465;
+    height: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: auto;
+    margin: 6px 0 6px 0;
+}
+
+.profile__api-info {
+    text-align: center;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 183px 0 0 0;
+    min-height: 13px;
+}
+
+.profile__api-info_err {
+    color: #FF004C;
+}
+
+.profile__api-info_msg {
+    color: #4285f4;
+}
+
 .profile__input:focus {
     outline: none;
 }
@@ -81,6 +114,10 @@
 }
 
 .profile__link {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
     color: #ee3465;
     text-align: center;
     font-size: 13px;
@@ -103,15 +140,25 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    margin-top: 220px;
+    margin-top: 20px;
     cursor: pointer;
     border: none;
     border-radius: 3px;
     width: 100%;
 }
 
+.profile__submit-btn_disabled {
+    color: #c2c2c2;
+    background: #F8F8F8;
+    cursor: auto;
+}
+
 .profile__edit-btn:hover {
     opacity: 80%;
+}
+
+.profile__submit-btn__button_disabled:hover {
+    opacity: 100%;
 }
 
 .profile__link:hover {
@@ -132,11 +179,11 @@
     }
 
     .profile__fieldset {
-        margin-top: 97px;
+        margin-top: 73px;
     }
 
-    .profile__submit-btn {
-        margin-top: 209px;
+    .profile__api-info {
+        margin-top: 176px;
     }
 
     .profile__edit-btn {
@@ -150,7 +197,7 @@
     }
 
     .profile__fieldset {
-        margin-top: 80px;
+        margin-top: 56px;
         width: 260px;
     }
 
@@ -163,8 +210,8 @@
         font-size: 12px;
     }
 
-    .profile__submit-btn {
-        margin-top: 378px;
+    .profile__api-info {
+        margin-top: 345px;
     }
 
 }

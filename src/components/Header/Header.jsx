@@ -2,8 +2,12 @@ import './Header.css';
 import Navigation from "../Navigation/Navigation";
 import LogoLink from "../Logo/Logo";
 import NavTabs from "../NavTabs/NavTabs";
+import {useContext} from "react";
+import {AuthUserContext} from "../../contexts/AuthUserContext";
 
-export default function Header({color, showTabs, onBurgerMenuClick}) {
+export default function Header({color, onBurgerMenuClick}) {
+    const {isLoggedIn} = useContext(AuthUserContext);
+
     return (
         <header className={`header header_${color}`}>
             <div className="header__content">
@@ -11,7 +15,7 @@ export default function Header({color, showTabs, onBurgerMenuClick}) {
                     <LogoLink/>
                 </div>
                 <div className="header__center">
-                    {showTabs && (
+                    {isLoggedIn && (
                         <NavTabs/>
                     )}
                 </div>
