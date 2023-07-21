@@ -3,21 +3,29 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import Footer from '../Footer/Footer';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {localStorageNames} from "../../utils/config";
 
 function SavedMovies({
                          onBurgerMenuClick,
                          movies,
                          savedMovies,
                          onSearch,
-                         onCheckbox,
                          onDelete,
                          onSave,
                      }) {
 
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isShortFilms, setIsShortFilms] = useState(false);
+
+    function handleSearch({ searchQuery, isShortFilms }) {
+        setSearchQuery(searchQuery)
+        setIsShortFilms(isShortFilms)
+        onSearch({ searchQuery, isShortFilms })
+    }
 
     useEffect(() => {
-        onSearch('')
+        onSearch({searchQuery, isShortFilms })
     }, [])
 
     return (
@@ -26,8 +34,8 @@ function SavedMovies({
             <SearchForm
                 searchQuery={''}
                 isShortFilms={false}
-                onSearch={onSearch}
-                onCheckbox={onCheckbox}/>
+                onSearch={handleSearch}
+            />
             <MoviesCardList
                 isSavedMode={true}
                 movies={movies}

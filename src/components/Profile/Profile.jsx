@@ -50,43 +50,45 @@ function Profile({onEditSubmit, onBurgerMenuClick, onSignOutClick, responseInfo}
                     <p className='profile__input-error'>{errors.name || ''}</p>
                     <div className='profile__field profile__field_first'>
                         <label className='profile__name'>Имя</label>
-                        <input className='profile__input'
-                               disabled={!isEditing}
-                               name='name'
-                               id='name'
-                               type='text'
-                               placeholder={currentUser.name}
-                               minLength="3"
-                               maxLength="20"
-                               pattern="[a-zA-Zа-яА-ЯёЁ\-\s]*"
-                               value={values.name || ''}
-                               onChange={handleChange}
-                               required/>
+                        <input
+                            className='profile__input'
+                            disabled={!isEditing}
+                            name='name'
+                            id='name'
+                            type='text'
+                            placeholder={currentUser.name}
+                            minLength="3"
+                            maxLength="20"
+                            pattern="[a-zA-Zа-яА-ЯёЁ\-\s]*"
+                            value={values.name || ''}
+                            onChange={handleChange}
+                            required/>
                     </div>
                     <div className='profile__field'>
                         <label className='profile__name'>E-mail</label>
-                        <input className='profile__input'
-                               disabled={!isEditing}
-                               name='email'
-                               id='email'
-                               type='email'
-                               pattern="\S+@\S+\.\S+"
-                               placeholder={currentUser.email}
-                               value={values.email || ''}
-                               onChange={handleChange}
-                               required/>
+                        <input
+                            className='profile__input'
+                            disabled={!isEditing}
+                            name='email'
+                            id='email'
+                            type='email'
+                            pattern="\S+@\S+\.\S+"
+                            placeholder={currentUser.email}
+                            value={values.email || ''}
+                            onChange={handleChange}
+                            required/>
                     </div>
                     <p className='profile__input-error'>{errors.email || ''}</p>
-
                 </div>
                 {isEditing &&
                     <>
-                        <p className={`profile__api-info ${responseInfo.isError 
-                            ? 'profile__api-info_err' 
-                            : 'profile__api-info_msg' }`}>{responseInfo.message || ''}</p>
-                        <button className={`profile__submit-btn ${isDisabled ? 'profile__submit-btn_disabled' : ''}`}
-                                disabled={isDisabled}
-                                type='submit'>
+                        <p className={`profile__api-info ${responseInfo.isError
+                            ? 'profile__api-info_err'
+                            : 'profile__api-info_msg'}`}>{responseInfo.message || ''}</p>
+                        <button
+                            className={`profile__submit-btn ${isDisabled ? 'profile__submit-btn_disabled' : ''}`}
+                            disabled={isDisabled}
+                            type='submit'>
                             Сохранить
                         </button>
                     </>

@@ -36,50 +36,54 @@ function Register({onRegisterSubmit, responseInfo}) {
             <form className='register__form' onSubmit={handleSubmit} noValidate>
                 <div className='register__field'>
                     <label className='register__field-name'>Имя</label>
-                    <input className={`register__input ${errors.name ? 'register__input_invalid' : ''}`}
-                           name='name'
-                           id='name'
-                           type='text'
-                           placeholder='Имя'
-                           minLength="3"
-                           maxLength="20"
-                           pattern="[a-zA-Zа-яА-ЯёЁ\-\s]*"
-                           defaultValue={values.name || ''}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        className={`register__input ${errors.name ? 'register__input_invalid' : ''}`}
+                        name='name'
+                        id='name'
+                        type='text'
+                        placeholder='Имя'
+                        minLength="3"
+                        maxLength="20"
+                        pattern="[a-zA-Zа-яА-ЯёЁ\-\s]*"
+                        defaultValue={values.name || ''}
+                        onChange={handleChange}
+                        required/>
                     <span className='register__input-error'>{errors.name || ''}</span>
                 </div>
                 <div className='register__field'>
                     <label className='register__field-name'>E-mail</label>
-                    <input className={`register__input ${errors.email ? 'register__input_invalid' : ''}`}
-                           name='email'
-                           id='email'
-                           type='email'
-                           placeholder='pochta@yandex.ru'
-                           pattern="\S+@\S+\.\S+"
-                           value={values.email || ''}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        className={`register__input ${errors.email ? 'register__input_invalid' : ''}`}
+                        name='email'
+                        id='email'
+                        type='email'
+                        placeholder='pochta@yandex.ru'
+                        pattern="\S+@\S+\.\S+"
+                        value={values.email || ''}
+                        onChange={handleChange}
+                        required/>
                     <span className='register__input-error'>{errors.email || ''}</span>
                 </div>
                 <div className='register__field'>
                     <label className='register__field-name'>Пароль</label>
-                    <input className={`register__input ${errors.password ? 'register__input_invalid' : ''}`}
-                           name='password'
-                           minLength="3"
-                           maxLength="20"
-                           id='password'
-                           type='password'
-                           placeholder='****'
-                           value={values.password || ''}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        className={`register__input ${errors.password ? 'register__input_invalid' : ''}`}
+                        name='password'
+                        minLength="3"
+                        maxLength="20"
+                        id='password'
+                        type='password'
+                        placeholder='****'
+                        value={values.password || ''}
+                        onChange={handleChange}
+                        required/>
                     <span className='register__input-error'>{errors.password || ''}</span>
                 </div>
                 <p className='register__api-error'>{responseInfo.isError ? responseInfo.message : ''}</p>
-                <button className={`register__button ${!isValid && errors ? 'register__button_disabled' : ''}`}
-                        disabled={!isValid}
-                        type='submit'>
+                <button
+                    className={`register__button ${!isValid && errors ? 'register__button_disabled' : ''}`}
+                    disabled={!isValid}
+                    type='submit'>
                     Зарегистрироваться
                 </button>
             </form>

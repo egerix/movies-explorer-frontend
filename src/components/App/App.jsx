@@ -30,8 +30,6 @@ function App() {
     const [currentUser, setCurrentUser] = useState({});
     const [responseInfo, setResponseInfo] = useState({isError: false, message: ''});
 
-    const [searchQuery, setSearchQuery] = useState(() => localStorage.getItem(localStorageNames.searchQuery) || '');
-    const [isShortFilms, setIsShortFilms] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.isShortFilms) || false));
     const [allMovies, setAllMovies] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.allMovies) || '[]'));
     const [savedMovies, setSavedMovies] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.savedMovies) || '[]'));
     const [filteredMovies, setFilteredMovies] = useState(() => JSON.parse(localStorage.getItem(localStorageNames.filteredMovies) || '[]'));
@@ -122,8 +120,6 @@ function App() {
         setSavedMovies([]);
         setAllMovies([]);
         setFilteredMovies([]);
-        setIsShortFilms(false);
-        setSearchQuery('');
         localStorage.clear();
         navigate('/', {replace: true});
     }
@@ -172,12 +168,8 @@ function App() {
             });
     }
 
-    function handleSearch(query) {
-        setSearchQuery(query)
-    }
-
-    function handleCheckBox(checked) {
-        setIsShortFilms(checked)
+    function handleSearch({searchQuery, isShortFilms}) {
+        filterMovies({searchQuery, isShortFilms})
     }
 
     function fetchSavedMovies() {
@@ -199,6 +191,17 @@ function App() {
             })
     }
 
+    function filterMovies({searchQuery, isShortFilms}) {
+        const filter = (arr) => arr.filter((movie) => {
+            let keep = movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
+            if (isShortFilms) {
+                keep = keep && movie.duration <= 40
+            }
+            return keep
+        })
+        setFilteredMovies(filter(allMovies))
+    }
+
     useEffect(() => {
         if (isLoggedIn && allMovies.length < 1) {
             setIsShowPreloader(true)
@@ -210,23 +213,6 @@ function App() {
     }, [isLoggedIn])
 
     useEffect(() => {
-        const filter = (arr) => arr.filter((movie) => {
-            let keep = movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
-            if (isShortFilms) {
-                keep = keep && movie.duration <= 40
-            }
-            return keep
-        })
-        setFilteredMovies(filter(allMovies))
-    }, [searchQuery, isShortFilms, allMovies])
-
-    useEffect(() => {
-            if (isShortFilms !== undefined) {
-                localStorage.setItem(localStorageNames.isShortFilms, isShortFilms.toString())
-            }
-            if (searchQuery !== undefined) {
-                localStorage.setItem(localStorageNames.searchQuery, searchQuery.toString())
-            }
             if (allMovies !== undefined) {
                 localStorage.setItem(localStorageNames.allMovies, JSON.stringify(allMovies))
             }
@@ -237,7 +223,7 @@ function App() {
                 localStorage.setItem(localStorageNames.filteredMovies, JSON.stringify(filteredMovies))
             }
         },
-        [isShortFilms, searchQuery, allMovies, savedMovies, filteredMovies])
+        [allMovies, savedMovies, filteredMovies])
 
     return (
         <div className='app'>
@@ -246,10 +232,8 @@ function App() {
                     <Routes>
                         {!isLoggedIn ?
                             (<>
-                                <Route path='/signup'
-                                       element={<Register responseInfo={responseInfo} onRegisterSubmit={handleRegister}/>}/>
-                                <Route path='/signin'
-                                       element={<Login responseInfo={responseInfo} onLoginSubmit={handleLogin}/>}/>
+                                <Route path='/signup' element={<Register responseInfo={responseInfo} onRegisterSubmit={handleRegister}/>}/>
+                                <Route path='/signin' element={<Login responseInfo={responseInfo} onLoginSubmit={handleLogin}/>}/>
                             </>) :
                             (<>
                                 <Route path='/signin' element={<Navigate to='/'/>}/>
@@ -276,12 +260,9 @@ function App() {
                         <Route path='/movies' element={
                             <ProtectedRoute
                                 element={Movies}
-                                searchQuery={searchQuery}
-                                isShortFilms={isShortFilms}
                                 onBurgerMenuClick={handleBurgerMenuClick}
                                 movies={filteredMovies}
                                 savedMovies={savedMovies}
-                                onCheckbox={handleCheckBox}
                                 onSearch={handleSearch}
                                 onDelete={handleDeleteMovie}
                                 onSave={handleSaveMovie}
@@ -290,11 +271,9 @@ function App() {
                         <Route path='/saved-movies' element={
                             <ProtectedRoute
                                 element={SavedMovies}
-                                isShortFilms={isShortFilms}
                                 onBurgerMenuClick={handleBurgerMenuClick}
                                 movies={filteredMovies}
                                 savedMovies={savedMovies}
-                                onCheckbox={handleCheckBox}
                                 onSearch={handleSearch}
                                 onDelete={handleDeleteMovie}
                                 onSave={handleSaveMovie}

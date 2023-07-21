@@ -35,35 +35,38 @@ function Login({onLoginSubmit, responseInfo}) {
             <form className='login__form' onSubmit={handleSubmit} noValidate>
                 <div className='login__field'>
                     <label className='login__field-name'>E-mail</label>
-                    <input className='login__input'
-                           name='email'
-                           id='email'
-                           type='email'
-                           placeholder='pochta@yandex.ru'
-                           pattern="\S+@\S+\.\S+"
-                           value={values.email || ''}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        className='login__input'
+                        name='email'
+                        id='email'
+                        type='email'
+                        placeholder='pochta@yandex.ru'
+                        pattern="\S+@\S+\.\S+"
+                        value={values.email || ''}
+                        onChange={handleChange}
+                        required/>
                     <span className='login__input-error'>{errors.email || ''}</span>
                 </div>
                 <div className='login__field'>
                     <label className='login__field-name'>Пароль</label>
-                    <input className='login__input'
-                           name='password'
-                           id='password'
-                           type='password'
-                           minLength="3"
-                           maxLength="20"
-                           placeholder='****'
-                           value={values.password || ''}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        className='login__input'
+                        name='password'
+                        id='password'
+                        type='password'
+                        minLength="3"
+                        maxLength="20"
+                        placeholder='****'
+                        value={values.password || ''}
+                        onChange={handleChange}
+                        required/>
                     <span className='login__input-error'>{errors.password || ''}</span>
                 </div>
                 <p className='login__api-error'>{responseInfo.isError ? responseInfo.message : ''}</p>
-                <button className={`login__button ${!isValid && errors ? 'login__button_disabled' : ''}`}
-                        disabled={!isValid}
-                        type='submit'>
+                <button
+                    className={`login__button ${!isValid && errors ? 'login__button_disabled' : ''}`}
+                    disabled={!isValid}
+                    type='submit'>
                     Войти
                 </button>
             </form>
